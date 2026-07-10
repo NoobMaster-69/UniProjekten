@@ -1,0 +1,5 @@
+1. Da lock nicht genutzt wird kann gleichzeitiges schreiben zu falschen Nachrichten führen.
+2. Maximum Storage und dinge wie durchsuchen der Daten könnten zu Problemen führen.
+3. The host of a session saves a username for that session.
+4. Because it protects cookies against tempering and session data is stored in cookies.
+5. Using a database e.g. mysql.

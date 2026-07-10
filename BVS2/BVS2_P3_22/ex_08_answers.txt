@@ -1,0 +1,10 @@
+1.The phi model will have to be downloaded during Runtime instead of Buildtime, which means the model will have to be downloaded on every container startup.
+
+2.I would have to create a docker-composer file(and separate dockerfiles), like I did in the project.
+
+3.I would make the references into a variable(or variables if needed), which is getting filled by user-inputs from the HTML and then loads everything needed
+   from the selected model.
+
+4.I can just use the prebuilt containter from ollama, its more scalable, by using multiple containers, and independent of the OS.
+
+5.I would save the messages and responses in a dict and display the entries by their key in html.

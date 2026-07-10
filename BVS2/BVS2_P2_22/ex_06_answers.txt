@@ -1,0 +1,7 @@
+1. exposed_ makes the server method it is attached to accessible by remote clients.
+2. Since our server is threaded, multiple clients will be handled simultaneously.
+3. Whitelisting/Blacklisting and User-Authentication come to mind, otherwhise securing the ports
+   through protocols(https) could also be beneficial.
+4. Files that arent meant to be altered could be altered which could lead to errors 
+   or changes in code that render the whole programm unusable.
+5. To handle multiple potential clients.

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Query</title></head>
+<body>
+    <form method = "POST">
+        <input name="message" required placeholder="Enter your message">
+        <button type = "submit">Submit</button>
+    </form>
+    {% if response %}
+        <h2>Answer:</h2>
+        <p>{{ response }}</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <style>
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 5px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome, {{ username }}</h2>
+
+    <div id="chat-box"></div>
+
+    <form id="chat-form">
+        <input name="message" id="msg" placeholder="Your message..." required autocomplete="off">
+        <button type = "submit">send</button>
+    </form>
+
+    <script>
+        async function fetchMessages() {
+            const response = await fetch('/messages');
+            const messages = await response.json();
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML = "";
+            for (const line of messages) {
+                const div = document.createElement("div");
+                div.textContent = line.trim();
+                chatBox.appendChild(div);
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        document.getElementById("chat-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const msgInput = document.getElementById("msg");
+            const message = msgInput.value.trim();
+            if (message) {
+                await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `message=${encodeURIComponent(message)}`
+                });
+                msgInput.value = "";
+                fetchMessages();  // Optionally trigger immediate refresh
+            }
+        });
+
+        // Poll every 1 second
+        setInterval(fetchMessages, 1000);
+        fetchMessages();
+    </script>
+</body>
+</html>
