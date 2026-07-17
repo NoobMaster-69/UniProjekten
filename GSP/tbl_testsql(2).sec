@@ -1,0 +1,78 @@
+https://sqlite.org/index.html
+https://sqlite.org/docs.html
+https://sqlite.org/quickstart.html
+https://www.w3schools.com/sql/
+https://docs.python.org/3/library/sqlite3.html#sqlite3-tutorial
+
+1) Installieren Sie DB Browser for SQLite: https://sqlitebrowser.org/
+2) Starten Sie DB Broser for SQLite
+3) Erstellen Sie eine leere db, z.B. test.db
+4) Kopieren Sie die Zeilen 14 bis 24 und fügen Sie in den Reiter "SQL ausführen", um eine Test-Tabelle mit drei Dummy-Werten anzulegen
+5) Klicken Sie auf das Pfeilsymbol "komplettes/ausgewähltes SQL ausführen [Strg + Return, F5, Strg + Return]"
+6) Prüfen Sie im unteren Bereich nach, ob de Ausführung ohne Fehler beendet wird
+
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "tbl_test" (
+	"id"	INTEGER,
+	"name"	TEXT,
+	"gehalt"	REAL,
+	"last_update" TIMESTAMP,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+INSERT INTO "tbl_test" VALUES (1,'Max',3499.99,null),
+ (2,'Anna',2500.01,null),
+ (3,'Lee',2500.0,null);
+COMMIT;
+
+
+
+--  Summe aller Gehälter
+select sum(gehalt) from tbl_test;
+
+-- Durchschnitt aller Gehälter
+select avg(gehalt) from tbl_test;
+
+-- Minimum aller Gehälter
+select min(gehalt) from tbl_test;
+
+-- Maximum aller Gehälter
+select max(gehalt) from tbl_test;
+
+-- Wer wird am besten bezahlt
+select name, max(gehalt) from tbl_test;
+
+-- Max bekommt Gehaltserhöhung
+update tbl_test set gehalt = 4000 where id = 1;
+
+-- Alle Gehälter um 100 € erhöhen
+UPDATE tbl_test SET gehalt = (SELECT tmp.gehalt FROM tbl_test tmp WHERE tmp.id = tbl_test.id) + 100.;
+
+-- Sie können SQL-Trigger erstellen, der auf der Grundlage von UPDATE- oder INSERT-Änderungen an den angegebenen Spalten bestimmte Aktionen ausführt.  Das ist sinnvoll, wenn Sie mit Zeitstempel arbeiten möchten. Das machen wir nun mit unserer Test-Datenbank.
+-- Setzen Sie analog zu Schritten 4 bis 6 folgende SQL-Statement ab.  Es fügt der Tabelle eine neue Spalte (ein neues Attribut) "last_update" vom Typ TIMESTAMP hinzu
+ALTER TABLE tbl_test ADD COLUMN last_update TIMESTAMP;
+
+-- Die neue Struktur sollte nun so aussehen:
+
+CREATE TABLE IF NOT EXISTS "tbl_test" (
+	"id"	INTEGER,
+	"name"	TEXT,
+	"gehalt"	REAL,
+	"last_update" TIMESTAMP,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
+CREATE TRIGGER trigger_ai AFTER INSERT ON tbl_test
+	BEGIN
+	UPDATE tbl_test SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;
+	END;
+	
+CREATE TRIGGER trigger_au AFTER UPDATE ON tbl_test
+	BEGIN
+	UPDATE tbl_test SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;
+	END
+	
+
+-- Fügen Sie einen neuen Datensatz hinzu, z.B.
+INSERT INTO "tbl_test" VALUES (4,'Hugo',2400,0);
+
+-- Kontrollieren Sie Ihre Tabelle. Was fällt Ihnen auf?

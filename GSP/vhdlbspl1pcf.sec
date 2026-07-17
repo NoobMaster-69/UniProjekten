@@ -1,0 +1,41 @@
+#############################################################
+# Physical Constraint File
+# Hier werden die VHDL in / out zu Pin- nummern zugewiesen
+# z.B:
+# entity vhdlbspl1 is
+#   port (
+#     a, b    : in  std_logic; 
+#     f       : out std_logic);
+# end vhdlbspl1;
+# set_io f 119  # out f --> Pin 119 (LED)
+# set_io a 122  # in a  --> Pin 122 (SW1, Taster)
+# set_io b 124  # in a  --> Pin 124 (SW2, Taster)
+#
+#############################################################
+# Zuweisung von Einzelpins zu Vektoren: # set_io outvektor[3] 116
+#        
+#############################################################
+# Taster / Pin  (aktiv low, also gedrückt = 1)
+# SW1      122
+# SW2      124
+# SW3      125
+# SW4      128
+# SW5      129
+#
+# Schiebeschalter (
+#
+# SW6      130
+# SW7      134
+#
+# LEDs
+# D1       112
+# D2       113
+# D3       114
+# D4       115
+# D5       116
+# D6       117
+# D7       118
+# D8       119
+#
+# CLock 12 MHz Pin 21
+#
